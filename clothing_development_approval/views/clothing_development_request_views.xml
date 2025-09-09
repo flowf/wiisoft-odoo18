@@ -8,8 +8,26 @@
             <field name="arch" type="xml">
                 <form string="服装开发申请">
                     <header>
+                        <!-- 操作按钮 -->
+                        <button name="action_submit" type="object" string="提交申请" 
+                                class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_start_review" type="object" string="开始审核" 
+                                class="oe_highlight" invisible="state != 'submitted'"/>
+                        <button name="action_approve" type="object" string="批准" 
+                                class="oe_highlight" invisible="state != 'under_review'"/>
+                        <button name="action_reject" type="object" string="拒绝" 
+                                invisible="state not in ['submitted', 'under_review']"/>
+                        <button name="action_start_development" type="object" string="开始开发" 
+                                class="oe_highlight" invisible="state != 'approved'"/>
+                        <button name="action_complete" type="object" string="完成开发" 
+                                class="oe_highlight" invisible="state != 'in_development'"/>
+                        <button name="action_cancel" type="object" string="取消申请" 
+                                invisible="state in ['completed']"/>
+                        <button name="action_reset_to_draft" type="object" string="重置为草稿" 
+                                invisible="state not in ['rejected', 'cancelled']"/>
+                        
                         <!-- 状态栏 -->
-                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,in_development,completed,cancelled"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,under_review,approved,in_development,completed,rejected,cancelled"/>
                     </header>
                     <sheet>
                         <!-- 顶部按钮区域 -->
